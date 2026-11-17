@@ -2,11 +2,12 @@
 
 A flight computer for a half-kilogram solid-fuel hobby rocket with thrust vector control (TVC). It tracks the rocket's orientation and altitude, then steers the motor with two servos to keep it flying straight. The long-term goal is a self-landing rocket.
 
-<img src="assets/rocket_render.png" alt="Elytra rocket CAD render" width="300">
+<p>
+  <img src="assets/rocket_render.png" alt="Elytra rocket CAD render" height="380">
+  <img src="assets/pcb_render.png" alt="Elytra PCB render" height="380">
+</p>
 
 ## What's on the board
-
-![Elytra PCB render](assets/3dpcb2.png)
 
 - ESP32 microcontroller
 - MPU6050 accelerometer and gyro for pitch, roll, and yaw
