@@ -1,44 +1,37 @@
-# Elytra: TVC Hobby Rocket Flight Computer
+# Elytra
 
-## Short Description
+A flight computer for a half-kilogram solid-fuel hobby rocket with thrust vector control (TVC). It tracks the rocket's orientation and altitude, then steers the motor with two servos to keep it flying straight. The long-term goal is a self-landing rocket.
 
-Elytra is a half-kilogram solid-fuel TVC hobby rocket flight computer. To develop a custom computer, the goal is to start as simple as possible and iterate through more and more detailed developments. The current version thus far incorporates working components including an ESP32, BMP280, and MPU6050 dev board and joins them all onto 1 single pcb.
+<img src="assets/rocket_render.png" alt="Elytra rocket CAD render" width="300">
 
-## Why Make This Project?
+## What's on the board
 
-The purpose of Elytra is to eventually explore self-landing rocket technology. In order to develop an autonomous rocket, the computer needs to be able to read input data regarding yaw, pitch, roll, acceleration, and elevation in order to actively adjust the direction of thrust and self-correct direction. Hence, the purpose of the flight computer is to actively control a thrust vectoring system via servos (TVC) based on input data from various telemetry sensors, including an accelerometer (mpu6050) and barometer (bmp280)
+![Elytra PCB render](assets/3dpcb2.png)
 
-video demo: https://youtu.be/cWIUwfU-qWE
+- ESP32 microcontroller
+- MPU6050 accelerometer and gyro for pitch, roll, and yaw
+- BMP280 barometer for altitude
+- Micro SD card for flight logs
+- 3 servo headers: 2 for the TVC gimbal, 1 for the parachute
+- 3S LiPo power with a 5V buck converter
 
-## Project Images
+## Firmware
 
-![cad_image](/assets/sch_rocket.png)
-![cad_image](/assets/livecomputer.png)
-![image](/assets/3dpcb2.png)
-![image](/assets/wiredpcb.png)
-![image](/assets/cad4.png)
+Fuses the sensor data, runs a PID loop on pitch and roll, and turns the output into gimbal angles. It steps through flight states (armed, ascent, apogee, descent, landed) and logs everything to the SD card.
 
-### Assembly & Test
+**Demo video:** https://youtu.be/cWIUwfU-qWE
 
-![image](/assets/soldering1.jpg)
-![image](/assets/soldering2.jpg)
-![image](/assets/finished_pcb.jpg)
-![data](/assets/example_data.png)
+## Tech
 
+c++, platformio, arduino, kicad
 
+## Structure
 
-## BOM
-
-| No. | Qty | Component / Comment                  | Supplier Part | Supplier   | Unit Cost | Total Cost (+shipping) | Link |
-|-----|-----|--------------------------------------|----------------|------------|-----------|-------------------------|------|
-| 1   | 5   | RS606-10N011CG1B-3A                  | C2885789       | LCSC       | $0.67*    | $3.35*                  | [JLCPCB](https://jlcpcb.com/partdetail/HCTL-RS606101N011CRB/C2885788) |
-| 2   | 1   | MPU6050 Breakout (Accelerometer)     | -              | AliExpress | -         | Already Owned           | -    |
-| 3   | 1   | BMP280 Breakout (Barometer)          | -              | AliExpress | -         | Already Owned           | -    |
-| 4   | 1   | ESP32 WROOM (Microcontroller)        | -              | AliExpress | -         | Already Owned           | -    |
-| 5   | 1   | Micro SD Card Reader (Data Storage)  | -              | AliExpress | -         | Already Owned           | -    |
-| 6   | 1   | Servos (Motor)                       | -              | AliExpress | -         | Already Owned           | -    |
-| 7   | 1   | 3S LiPo (Battery)                    | -              | AliExpress | -         | Already Owned           | -    |
-| 8   | 5   | 3S XT30 to 5V 5A (Buck Converter)    | -              | SpeedyFPV  | -         | Already Owned           | -    |
-| 9   | 5   | Custom PCB                           | -              | JLCPCB     | $2.92     | $14.60 + $27.72 shipping| -    |
-
-**Total Cost: $45.67** (excluding already owned components)
+```
+FIRMWARE/     flight software
+PCB/          board design
+PRODUCTION/   gerbers and the 3D printed mount
+CAD/          mount design (STEP)
+BOM.csv       parts list (about $46 beyond parts I already had)
+Journal.md    build log
+```
