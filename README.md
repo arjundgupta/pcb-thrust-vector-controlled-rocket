@@ -24,7 +24,7 @@ Fuses the sensor data, runs a PID loop on pitch and roll, and turns the output i
 
 ## Tech
 
-c++, platformio, arduino, kicad
+platformio, kicad
 
 ## Structure
 
